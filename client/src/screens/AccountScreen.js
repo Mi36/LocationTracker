@@ -1,10 +1,16 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Button, SafeAreaView} from 'react-native';
 
-export default function AccountScreen() {
+export default function AccountScreen({navigation}) {
   return (
-    <View>
+    <SafeAreaView>
       <Text>accountscreen</Text>
-    </View>
+      <Button
+        title="go auth flow"
+        onPress={() => {
+          navigation.navigate('loginFlow');
+        }}
+      />
+    </SafeAreaView>
   );
 }
