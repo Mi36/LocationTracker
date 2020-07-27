@@ -11,6 +11,7 @@ export default function SignUp({navigation}) {
     <SafeAreaView style={{backgroundColor: 'pink'}}>
       <Input label="Email" value={email} onChangeText={setEmail} />
       <Input label="Password" value={password} onChangeText={setPassword} />
+      {state.errorMessage ? <Text>{state.errorMessage}</Text> : null}
       <Button title="Sign Up" onPress={() => signup({email, password})} />
 
       {/* <Button
