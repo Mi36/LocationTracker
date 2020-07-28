@@ -1,7 +1,8 @@
 import React, {useState, useContext} from 'react';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, TouchableOpacity} from 'react-native';
 import {Text, Input, Button} from 'react-native-elements';
 import {Context as authContext} from '../context/AuthContext';
+import {navigate} from '../navigationRef';
 
 export default function SignUp({navigation}) {
   const {state, signup} = useContext(authContext);
@@ -13,6 +14,9 @@ export default function SignUp({navigation}) {
       <Input label="Password" value={password} onChangeText={setPassword} />
       {state.errorMessage ? <Text>{state.errorMessage}</Text> : null}
       <Button title="Sign Up" onPress={() => signup({email, password})} />
+      <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+        <Text>Already have account? SignIn</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }

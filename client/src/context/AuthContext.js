@@ -9,6 +9,8 @@ const authReducer = (state, action) => {
       return {...state, errorMessage: action.payload};
     case 'signup':
       return {errorMessage: '', token: action.payload};
+    case 'signin':
+      return {errorMessage: '', token: action.payload};
     default:
       return state;
   }
@@ -23,13 +25,29 @@ const signup = (dispatch) => {
       dispatch({type: 'signup', payload: response.data.token});
       navigate('TrackList');
     } catch (e) {
-      dispatch({type: 'add_error', payload: 'error, Something went wrong'});
+      dispatch({
+        type: 'add_error',
+        payload: 'error, Something went wrong in signup',
+      });
     }
   };
 };
 
 const signin = (dispatch) => {
-  return ({email, password}) => {};
+  return async ({email, password}) => {
+    try {
+      const response = await trackerApi.post('/signin', {email, password});
+      console.log(response);
+      await AsyncStorage.setItem('token', response.data.token);
+      dispatch({type: 'signin', payload: response.data.token});
+      navigate('TrackList');
+    } catch (e) {
+      dispatch({
+        type: 'add_error',
+        payload: 'error, Something went wrong in signIn',
+      });
+    }
+  };
 };
 
 const signout = (dispatch) => {
