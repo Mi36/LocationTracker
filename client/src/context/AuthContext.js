@@ -11,6 +11,8 @@ const authReducer = (state, action) => {
       return {errorMessage: '', token: action.payload};
     case 'signin':
       return {errorMessage: '', token: action.payload};
+    case 'signout':
+      return {errorMessage: '', token: null};
     case 'clear_error_message':
       return {...state, errorMessage: ''};
     default:
@@ -59,6 +61,7 @@ const signin = (dispatch) => {
       dispatch({type: 'signin', payload: response.data.token});
       navigate('TrackList');
     } catch (e) {
+      console.log(e);
       dispatch({
         type: 'add_error',
         payload: 'error, Something went wrong in signIn',
@@ -67,8 +70,10 @@ const signin = (dispatch) => {
   };
 };
 
-const signout = (dispatch) => {
-  return () => {};
+const signout = (dispatch) => async () => {
+  await AsyncStorage.removeItem('token');
+  dispatch({type: 'signout'});
+  navigate('SignIn');
 };
 
 export const {Provider, Context} = createDataContext(
