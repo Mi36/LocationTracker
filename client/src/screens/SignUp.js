@@ -12,8 +12,18 @@ export default function SignUp({navigation}) {
   return (
     <SafeAreaView style={{backgroundColor: 'pink'}}>
       <NavigationEvents onWillFocus={clearErrorMessage} />
-      <Input label="Email" value={email} onChangeText={setEmail} />
-      <Input label="Password" value={password} onChangeText={setPassword} />
+      <Input
+        label="Email"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+      />
+      <Input
+        label="Password"
+        value={password}
+        onChangeText={setPassword}
+        autoCapitalize="none"
+      />
       {state.errorMessage ? <Text>{state.errorMessage}</Text> : null}
       <Button title="Sign Up" onPress={() => signup({email, password})} />
       <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>

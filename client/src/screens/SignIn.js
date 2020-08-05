@@ -12,8 +12,18 @@ export default function SignIn({navigation}) {
   return (
     <View style={{backgroundColor: 'pink'}}>
       <NavigationEvents onWillFocus={clearErrorMessage} />
-      <Input label="Email" value={email} onChangeText={setEmail} />
-      <Input label="Password" value={password} onChangeText={setPassword} />
+      <Input
+        label="Email"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+      />
+      <Input
+        label="Password"
+        value={password}
+        onChangeText={setPassword}
+        autoCapitalize="none"
+      />
       {state.errorMessage ? <Text>{state.errorMessage}</Text> : null}
       <Button title="LOGIN" onPress={() => signin({email, password})} />
       <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
