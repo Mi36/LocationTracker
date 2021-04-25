@@ -2,7 +2,7 @@ import Geolocation from '@react-native-community/geolocation';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native';
 import {PermissionsAndroid, Platform, Text, View} from 'react-native';
-import MapView, {Polyline, PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {Polyline, PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 
 export default function TrackCreate() {
