@@ -21,7 +21,6 @@ const authReducer = (state, action) => {
 };
 
 const clearErrorMessage = (dispatch) => () => {
-  console.log('ssssss');
   dispatch({type: 'clear_error_message'});
 };
 

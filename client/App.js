@@ -1,3 +1,5 @@
+import {LogBox} from 'react-native';
+LogBox.ignoreLogs(['Require cycle']);
 import React from 'react';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -9,6 +11,7 @@ import TrackCreate from './src/screens/TrackCreate';
 import TrackDetails from './src/screens/TrackDetails';
 import AccountScreen from './src/screens/AccountScreen';
 import {Provider as AuthProvider} from './src/context/AuthContext';
+import {Provider as LocationProvider} from './src/context/LocationContext';
 import {setNavigator} from './src/navigationRef';
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 
@@ -33,12 +36,16 @@ const App = createAppContainer(switchNavigator);
 
 export default () => {
   return (
-    <AuthProvider>
-      <App
-        ref={(navigator) => {
-          setNavigator(navigator);
-        }}
-      />
-    </AuthProvider>
+    //ivide oro providers onninu mukalil onnayi kodukkuka
+
+    <LocationProvider>
+      <AuthProvider>
+        <App
+          ref={(navigator) => {
+            setNavigator(navigator);
+          }}
+        />
+      </AuthProvider>
+    </LocationProvider>
   );
 };

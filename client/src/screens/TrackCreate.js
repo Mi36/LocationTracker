@@ -6,6 +6,17 @@ import {PERMISSIONS, RESULTS, check, request} from 'react-native-permissions';
 
 export default function TrackCreate() {
   const [err, setErr] = useState(null);
+  const startWatching = async () => {
+    try {
+      await requestLocationPermission();
+    } catch (e) {
+      setErr(e);
+    }
+  };
+
+  useEffect(() => {
+    startWatching();
+  }, []);
 
   const requestLocationPermission = async () => {
     if (Platform.OS === 'android') {
@@ -97,7 +108,6 @@ export default function TrackCreate() {
         {/* <!--the code below is used for appil vara idan --> */}
         <Polyline coordinates={points} />
       </MapView>
-      <Button title="request permissions" onPress={requestLocationPermission} />
       {err ? <Text>Please enable location services</Text> : null}
     </View>
   );

@@ -10,13 +10,14 @@ export default function SignIn({navigation}) {
   const [password, setPassword] = useState('');
 
   return (
-    <View style={{backgroundColor: 'pink'}}>
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <NavigationEvents onWillFocus={clearErrorMessage} />
       <Input
         label="Email"
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
+        style={{backgroundColor: 'red'}}
       />
       <Input
         label="Password"
@@ -32,4 +33,8 @@ export default function SignIn({navigation}) {
     </View>
   );
 }
-///
+SignIn.navigationOptions = () => {
+  return {
+    header: () => false,
+  };
+};
