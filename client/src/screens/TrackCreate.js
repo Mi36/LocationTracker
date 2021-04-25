@@ -92,12 +92,13 @@ export default function TrackCreate() {
 
   return (
     <SafeAreaView>
-      <View style={{position: 'relative', height: 500}}>
+      <View style={{position: 'relative', height: '100%'}}>
         <MapView
+          provider={PROVIDER_GOOGLE}
           style={{left: 0, right: 0, top: 0, bottom: 0, position: 'absolute'}}
           initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: 10.8505,
+            longitude: 76.2711,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}>
