@@ -1,20 +1,19 @@
-import React, {useState, useContext, useRef} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {
-  SafeAreaView,
-  TouchableOpacity,
-  View,
   Image,
-  TouchableWithoutFeedback,
-  StatusBar,
   Keyboard,
   KeyboardAvoidingView,
+  SafeAreaView,
+  StatusBar,
   StyleSheet,
-  ScrollView,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+  Platform,
 } from 'react-native';
-import {Text, Input, Button} from 'react-native-elements';
-import {Context as authContext} from '../context/AuthContext';
-import {navigate} from '../navigationRef';
+import {Input, Text} from 'react-native-elements';
 import {NavigationEvents} from 'react-navigation';
+import {Context as authContext} from '../context/AuthContext';
 
 export default function SignUp({navigation}) {
   const textInput = useRef(null);
@@ -28,7 +27,7 @@ export default function SignUp({navigation}) {
       <NavigationEvents onWillFocus={clearErrorMessage} />
 
       <KeyboardAvoidingView
-        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}>
         <TouchableWithoutFeedback
           onPress={Keyboard.dismiss}

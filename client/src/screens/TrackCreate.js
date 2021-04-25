@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import {View, PermissionsAndroid, Button, Text, Platform} from 'react-native';
-import MapView, {PROVIDER_GOOGLE, Polyline} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
-import {PERMISSIONS, RESULTS, check, request} from 'react-native-permissions';
+import React, {useEffect, useState} from 'react';
+import {SafeAreaView} from 'react-native';
+import {PermissionsAndroid, Platform, Text, View} from 'react-native';
+import MapView, {Polyline, PROVIDER_GOOGLE} from 'react-native-maps';
+import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 
 export default function TrackCreate() {
   const [err, setErr] = useState(null);
@@ -16,6 +17,7 @@ export default function TrackCreate() {
 
   useEffect(() => {
     startWatching();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const requestLocationPermission = async () => {
@@ -89,26 +91,21 @@ export default function TrackCreate() {
   }
 
   return (
-    <View>
-      <MapView
-        style={{
-          height: 400,
-          width: 400,
-          justifyContent: 'center',
-          alignItems: 'center',
-          alignSelf: 'center',
-        }}
-        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-        region={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.015,
-          longitudeDelta: 0.0121,
-        }}>
-        {/* <!--the code below is used for appil vara idan --> */}
-        <Polyline coordinates={points} />
-      </MapView>
-      {err ? <Text>Please enable location services</Text> : null}
-    </View>
+    <SafeAreaView>
+      <View style={{position: 'relative', height: 500}}>
+        <MapView
+          style={{left: 0, right: 0, top: 0, bottom: 0, position: 'absolute'}}
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}>
+          {/* <!--the code below is used for appil vara idan --> */}
+          <Polyline coordinates={points} />
+        </MapView>
+        {err ? <Text>Please enable location services</Text> : null}
+      </View>
+    </SafeAreaView>
   );
 }
