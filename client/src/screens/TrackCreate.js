@@ -46,7 +46,7 @@ export default function TrackCreate() {
       }
     }
     if (Platform.OS === 'ios') {
-      request(PERMISSIONS.IOS.LOCATION_ALWAYS)
+      request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
         .then((result) => {
           console.log(result);
         })
