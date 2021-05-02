@@ -1,11 +1,23 @@
 import Geolocation from '@react-native-community/geolocation';
-import React, {useEffect, useState} from 'react';
-import {SafeAreaView} from 'react-native';
-import {PermissionsAndroid, Platform, Text, View} from 'react-native';
-import MapView, {Polyline, PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import React, {useEffect, useState, useContext} from 'react';
+import {
+  PermissionsAndroid,
+  Platform,
+  Text,
+  View,
+  StyleSheet,
+  SafeAreaView,
+  ActivityIndicator,
+} from 'react-native';
+import MapView, {Polyline, PROVIDER_GOOGLE, Circle} from 'react-native-maps';
 import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
-
+import {Context as LocationContext} from '../context/LocationContext';
 export default function TrackCreate() {
+  const {
+    state: {currentLocation},
+    addLocation,
+  } = useContext(LocationContext);
+
   const [err, setErr] = useState(null);
   const startWatching = async () => {
     try {
@@ -29,14 +41,24 @@ export default function TrackCreate() {
 
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           console.log('You can use the location');
+          Geolocation.watchPosition(
+            (position) => {
+              console.log('position', position);
+              addLocation(position);
+            },
+            (_err) => {
+              console.log('error', _err);
+            },
+            {enableHighAccuracy: false, timeout: 5000},
+          );
           Geolocation.getCurrentPosition(
             (position) => {
-              console.log(position);
+              console.log('current', position);
             },
-            (err) => {
-              console.log(err);
+            (_err) => {
+              console.log(_err);
             },
-            {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+            {enableHighAccuracy: false, timeout: 5000},
           );
         } else {
           console.log('location permission denied');
@@ -68,6 +90,25 @@ export default function TrackCreate() {
               break;
             case RESULTS.GRANTED:
               console.log('The permission is granted');
+              Geolocation.watchPosition(
+                (position) => {
+                  console.log('position', position);
+                  addLocation(position);
+                },
+                (_err) => {
+                  console.log('error', _err);
+                },
+                {enableHighAccuracy: false, timeout: 5000},
+              );
+              Geolocation.getCurrentPosition(
+                (position) => {
+                  console.log('current', position);
+                },
+                (_err) => {
+                  console.log(_err);
+                },
+                {enableHighAccuracy: false, timeout: 5000},
+              );
               break;
             case RESULTS.BLOCKED:
               console.log(
@@ -92,21 +133,53 @@ export default function TrackCreate() {
 
   return (
     <SafeAreaView>
-      <View style={{position: 'relative', height: '100%'}}>
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          style={{left: 0, right: 0, top: 0, bottom: 0, position: 'absolute'}}
-          initialRegion={{
-            latitude: 10.8505,
-            longitude: 76.2711,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}>
-          {/* <!--the code below is used for appil vara idan --> */}
-          <Polyline coordinates={points} />
-        </MapView>
+      <View style={styles.container}>
+        {currentLocation ? (
+          <MapView
+            provider={PROVIDER_GOOGLE}
+            style={styles.map}
+            initialRegion={{
+              ...currentLocation.coords,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01,
+            }}
+            // usage of region : if we use regio in state and update from there, then for automatic map update and re-zoom and re-render
+            region={{
+              ...currentLocation.coords,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01,
+            }}>
+            {/* <!--the code below is used for appil vara idan --> */}
+            <Polyline coordinates={points} />
+            <Circle
+              center={currentLocation.coords}
+              radius={40}
+              strokeColor="rgba(158,158,255,1.0)"
+              fillColor="rgba(158,158,255,0.3)"
+            />
+          </MapView>
+        ) : (
+          <ActivityIndicator size="large" style={styles.indicator} />
+        )}
         {err ? <Text>Please enable location services</Text> : null}
       </View>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'relative',
+    height: '100%',
+  },
+  map: {
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    position: 'absolute',
+  },
+  indicator: {
+    marginTop: 200,
+  },
+});
