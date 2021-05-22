@@ -11,7 +11,6 @@ const TrackForm = () => {
     stopRecording,
     changeName,
   } = useContext(LocationContext);
-  console.log(locations);
 
   const [saveTrack] = useSaveTrack();
 
