@@ -25,3 +25,5 @@ instance.interceptors.request.use(
     return Promise.reject(err);
   },
 );
+
+export default instance;
