@@ -1,20 +1,22 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {SafeAreaView} from 'react-native';
 import {Text, StyleSheet} from 'react-native';
+import {Context as TrackContext} from '../context/TrackContext';
 
-export default function TrackDetails() {
+export default function TrackDetails({navigation}) {
+  const {state} = useContext(TrackContext);
+
+  const _id = navigation.getParam('_id');
+
+  // nammal nokkunna sadhanam kittiyal iteration nirthum
+  const track = state.find((t) => t._id === _id);
+
   return (
     <SafeAreaView forceInset={{top: 'always'}}>
-      <Text style={styles.font}>Track Details</Text>
+      <Text style={styles.font}>{track.name}</Text>
     </SafeAreaView>
   );
 }
-
-TrackDetails.navigationOptions = () => {
-  return {
-    header: () => false,
-  };
-};
 
 const styles = StyleSheet.create({
   font: {
