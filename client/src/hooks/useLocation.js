@@ -8,7 +8,7 @@ export default (callback) => {
   useEffect(() => {
     startWatching();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [callback]);
 
   const requestLocationPermission = async () => {
     if (Platform.OS === 'android') {

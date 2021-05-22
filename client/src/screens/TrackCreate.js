@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useCallback} from 'react';
 import {
   ActivityIndicator,
   SafeAreaView,
@@ -7,15 +7,20 @@ import {
   View,
 } from 'react-native';
 import MapView, {Circle, Polyline, PROVIDER_GOOGLE} from 'react-native-maps';
+import TrackForm from '../components/TrackForm';
 import {Context as LocationContext} from '../context/LocationContext';
 import useLocation from '../hooks/useLocation';
 export default function TrackCreate() {
   const {
-    state: {currentLocation},
+    state: {currentLocation, recording},
     addLocation,
   } = useContext(LocationContext);
 
-  const [err] = useLocation(addLocation);
+  const callback = useCallback((location) => addLocation(location, recording), [
+    recording,
+  ]);
+
+  const [err] = useLocation(callback);
 
   let points = [];
   for (let i = 0; i < 20; i++) {
@@ -57,6 +62,7 @@ export default function TrackCreate() {
         )}
         {err ? <Text>Please enable location services</Text> : null}
       </View>
+      <TrackForm />
     </SafeAreaView>
   );
 }
@@ -64,7 +70,7 @@ export default function TrackCreate() {
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
-    height: '100%',
+    height: 400,
   },
   map: {
     left: 0,

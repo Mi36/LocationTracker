@@ -12,6 +12,7 @@ import TrackDetails from './src/screens/TrackDetails';
 import AccountScreen from './src/screens/AccountScreen';
 import {Provider as AuthProvider} from './src/context/AuthContext';
 import {Provider as LocationProvider} from './src/context/LocationContext';
+import {Provider as TrackProvider} from './src/context/TrackContext';
 import {setNavigator} from './src/navigationRef';
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 
@@ -40,11 +41,13 @@ export default () => {
 
     <LocationProvider>
       <AuthProvider>
-        <App
-          ref={(navigator) => {
-            setNavigator(navigator);
-          }}
-        />
+        <TrackProvider>
+          <App
+            ref={(navigator) => {
+              setNavigator(navigator);
+            }}
+          />
+        </TrackProvider>
       </AuthProvider>
     </LocationProvider>
   );
