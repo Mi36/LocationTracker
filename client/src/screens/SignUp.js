@@ -11,7 +11,7 @@ import {
   View,
   Platform,
 } from 'react-native';
-import {Input, Text} from 'react-native-elements';
+import {Button, Input, Text} from 'react-native-elements';
 import {NavigationEvents} from 'react-navigation';
 import {Context as authContext} from '../context/AuthContext';
 
@@ -33,47 +33,49 @@ export default function SignUp({navigation}) {
           onPress={Keyboard.dismiss}
           style={styles.container}>
           <View style={styles.container}>
-            <View style={styles.logoContainer}>
-              <Image
-                style={styles.logo}
-                source={require('../images/logo.png')}
-              />
-              <Text style={styles.title}>Account Information</Text>
+            <View style={styles.top}>
+              <Text style={styles.header}>New Account</Text>
+              <Text style={styles.content}>Sign up and get started</Text>
             </View>
-            <View style={styles.infoContainer}>
-              <Input
-                label="Email"
-                value={email}
-                onChangeText={setEmail}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                autoCorrect={false}
-                onSubmitEditing={() => {
-                  textInput.current.focus();
-                }}
-              />
+            <Input
+              label="Email"
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              autoCorrect={false}
+              onSubmitEditing={() => {
+                textInput.current.focus();
+              }}
+              inputStyle={styles.input}
+              inputContainerStyle={styles.inputBox}
+            />
 
-              <Input
-                label="Password"
-                value={password}
-                onChangeText={setPassword}
-                autoCapitalize="none"
-                ref={textInput}
-              />
-
-              {state.errorMessage ? <Text>{state.errorMessage}</Text> : null}
-              <TouchableOpacity
-                style={styles.buttonContainer}
-                onPress={() => signup({email, password})}>
-                <Text style={styles.buttonText}>SiGNUP</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-                <Text style={styles.buttonText}>
-                  Already have account? SignIn
-                </Text>
-              </TouchableOpacity>
-            </View>
+            <Input
+              label="Password"
+              value={password}
+              onChangeText={setPassword}
+              autoCapitalize="none"
+              ref={textInput}
+              inputStyle={styles.input}
+              inputContainerStyle={styles.inputBox}
+              errorMessage={state.errorMessage}
+            />
+            <Button
+              buttonStyle={styles.button}
+              title="SIGNUP"
+              onPress={() => signup({email, password})}
+            />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('SignIn')}
+              style={{
+                alignItems: 'center',
+              }}>
+              <Text style={styles.buttonText}>
+                Already have account? Sign In
+              </Text>
+            </TouchableOpacity>
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
@@ -88,41 +90,40 @@ SignUp.navigationOptions = () => {
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: 'pink',
-  },
   container: {
     flex: 1,
-    backgroundColor: '#8a1a3d',
-  },
-  logoContainer: {
-    alignItems: 'center',
+    backgroundColor: '#EFF0F8',
+    marginHorizontal: 10,
     justifyContent: 'center',
-    flex: 1,
-    //backgroundColor: 'grey',
   },
-  logo: {
-    width: 128,
-    height: 56,
+  top: {
+    alignItems: 'center',
   },
-  title: {
-    color: '#f7c744',
-    fontSize: 18,
-    textAlign: 'center',
-    marginTop: 5,
-    opacity: 0.9,
+  header: {
+    fontSize: 30,
+    fontWeight: '500',
+    color: '#A2A8D3',
   },
-  infoContainer: {
-    //backgroundColor: 'green',
+  content: {
+    fontWeight: '500',
+    paddingVertical: 10,
   },
-  buttonContainer: {
-    backgroundColor: '#f7c744',
-    paddingVertical: 15,
+  input: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    borderWidth: 1,
+    height: 50,
+    borderColor: '#C3BCEF',
+    paddingHorizontal: 10,
   },
-  buttonText: {
-    textAlign: 'center',
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 18,
+  button: {
+    backgroundColor: '#525CDF',
+    borderRadius: 20,
+    height: 50,
+    marginHorizontal: 10,
+  },
+  inputBox: {
+    borderRadius: 20,
+    borderWidth: 1,
   },
 });
