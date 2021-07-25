@@ -13,7 +13,9 @@ import {Context as TrackContext} from '../context/TrackContext';
 export default function TrackList({navigation}) {
   const {state, fetchTracks} = useContext(TrackContext);
   return (
-    <SafeAreaView forceInset={{top: 'always'}}>
+    <SafeAreaView
+      forceInset={{top: 'always'}}
+      style={{backgroundColor: '#F5F6FA', flex: 1}}>
       {/* ith nammal evidennenkilum ingot navigate cheyyunna samayath call cheyyappedum */}
       <NavigationEvents onWillFocus={fetchTracks} />
       <Text style={styles.font}>Track List</Text>
@@ -36,19 +38,21 @@ export default function TrackList({navigation}) {
   );
 }
 
-TrackList.navigationOptions = () => {
-  return {
-    header: () => false,
-  };
+TrackList.navigationOptions = {
+  tabBarLabel: 'TRACK LIST',
 };
 
 const styles = StyleSheet.create({
   font: {
-    fontSize: 48,
+    fontSize: 40,
+    alignSelf: 'center',
   },
   list: {
     marginHorizontal: 20,
-    backgroundColor: 'green',
+    backgroundColor: '#9DC4EA',
     marginVertical: 10,
+    height: 30,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
   },
 });

@@ -67,10 +67,15 @@ export default function TrackCreate() {
   );
 }
 
+TrackCreate.navigationOptions = {
+  tabBarLabel: 'RECORD TRACK',
+};
+
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
     height: 400,
+    backgroundColor: '#EAEBFA',
   },
   map: {
     left: 0,
@@ -78,6 +83,7 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     position: 'absolute',
+    margin: 10,
   },
   indicator: {
     marginTop: 200,

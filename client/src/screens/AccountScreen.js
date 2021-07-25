@@ -11,22 +11,33 @@ const AccountScreen = () => {
   const {signout} = useContext(AuthContext);
 
   return (
-    <SafeAreaView forceInset={{top: 'always'}}>
-      <Text style={{fontSize: 48}}>AccountScreen</Text>
+    <SafeAreaView
+      forceInset={{top: 'always'}}
+      style={{backgroundColor: '#E7E9F9', flex: 1, justifyContent: 'center'}}>
       <Spacer>
-        <Button title="Sign Out" onPress={signout} />
+        <Button
+          title="Sign Out"
+          onPress={signout}
+          buttonStyle={styles.button}
+        />
       </Spacer>
     </SafeAreaView>
   );
 };
 
 AccountScreen.navigationOptions = {
-  title: 'Account',
+  title: 'ACCOUNT',
 };
 
 const styles = StyleSheet.create({
   spacer: {
     margin: 15,
+  },
+  button: {
+    backgroundColor: '#525CDF',
+    borderRadius: 20,
+    height: 50,
+    marginHorizontal: 10,
   },
 });
 

@@ -29,9 +29,11 @@ export default function TrackDetails({navigation}) {
 
 const styles = StyleSheet.create({
   font: {
-    fontSize: 48,
+    fontSize: 38,
+    alignSelf: 'center',
   },
   map: {
-    height: 400,
+    height: '100%',
+    padding: 10,
   },
 });
